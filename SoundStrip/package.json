@@ -6,7 +6,7 @@
 	"scripts": {
 		"dev": "react-router dev --host :: --port 3000",
 		"build": "react-router build",
-		"start": "react-router-serve ../../dist/apps/web/server/index.js",
+		"start": "react-router-serve build/server/index.js",
 		"lint": "oxlint -c .oxlintrc.json --threads=1 --format default",
 		"typecheck": "react-router typegen && tsc --noEmit"
 	},

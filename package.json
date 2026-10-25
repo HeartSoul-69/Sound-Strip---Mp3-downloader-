@@ -7,39 +7,37 @@
   "version": "1.0.0",
   "private": true,
   "main": "App-Electron/main.cjs",
-	"scripts": {
-		"setup": "npm install",
-		"dev": "concurrently --kill-others --raw \"npm run dev --prefix SoundStrip\" \"wait-on http://localhost:3000 && electron App-Electron/main.cjs\"",
-		"build": "npm run build --prefix SoundStrip",
-		"lint": "concurrently --raw \"npm run lint --prefix apps/web\"",
-		"typecheck": "concurrently --raw \"npm run typecheck --prefix SoundStrip\"",
-		"electron": "electron App-Electron/main.cjs",
-		"start": "npm run dev",
-		"package": "npm run build && electron-forge package",
-		"make": "npm run build && electron-forge make"
-	},
-	"devDependencies": {
-		"@electron-forge/cli": "^8.0.1",
-		"@electron-forge/maker-squirrel": "^8.0.1",
-		"concurrently": "^10.0.6",
-		"electron": "^44.9.0",
-		"knip": "^6.32.1",
-		"wait-on": "^9.5.1"
-	},
-
-	"config": {
-  "forge": {
-    "packagerConfig": {},
-    "makers": [
-      {
-        "name": "@electron-forge/maker-squirrel",
-        "config": {}
-      }
-    ]
+  "scripts": {
+    "setup": "npm install && npm install --prefix SoundStrip",
+    "dev": "concurrently --kill-others --raw \"npm run dev --prefix SoundStrip\" \"wait-on http://localhost:3000 && electron App-Electron/main.cjs\"",
+    "build": "npm run build --prefix SoundStrip",
+    "lint": "npm run lint --prefix SoundStrip",
+    "typecheck": "npm run typecheck --prefix SoundStrip",
+    "electron": "electron App-Electron/main.cjs",
+    "start": "npm run dev",
+    "package": "npm run build && electron-forge package",
+    "make": "npm run build && electron-forge make"
+  },
+  "devDependencies": {
+    "@electron-forge/cli": "^8.0.1",
+    "@electron-forge/maker-squirrel": "^8.0.1",
+    "concurrently": "^10.0.6",
+    "electron": "^44.9.0",
+    "knip": "^6.32.1",
+    "wait-on": "^9.5.1"
+  },
+  "config": {
+    "forge": {
+      "packagerConfig": {},
+      "makers": [
+        {
+          "name": "@electron-forge/maker-squirrel",
+          "config": {}
+        }
+      ]
+    }
+  },
+  "dependencies": {
+    "react-router": "^8.5.0"
   }
-},
-
-	"workspaces": [
-		"apps/*"
-	]
 }

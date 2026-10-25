@@ -4,6 +4,7 @@ import { request as httpsRequest } from 'node:https';
 import { spawn } from 'node:child_process';
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { mkdtemp, readFile, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import ffmpegPath from 'ffmpeg-static';
@@ -14,6 +15,7 @@ if (!ffmpegPath) throw new Error('ffmpeg-static did not provide a binary path. R
 const binary: string = ffmpegPath;
 const MAX_BYTES = 60 * 1024 * 1024;
 let active = 0;
+const appDirectory = fileURLToPath(new URL('../..', import.meta.url));
 
 /** Hosts we hand off to yt-dlp instead of treating as direct video files. */
 const YOUTUBE_RE = /(?:^|\.)(?:youtube\.com|youtu\.be|music\.youtube\.com|m\.youtube\.com|youtube-nocookie\.com)$/;
@@ -25,7 +27,7 @@ function isYouTube(hostname: string): boolean {
 /** Resolve the yt-dlp binary. Checks the bundled `bin/` directory first, then falls back to `yt-dlp` on PATH. */
 function resolveYtDlp(): string {
 	const isWin = process.platform === 'win32';
-	const bundled = join(process.cwd(), 'bin', isWin ? 'yt-dlp.exe' : 'yt-dlp');
+	const bundled = join(appDirectory, 'bin', isWin ? 'yt-dlp.exe' : 'yt-dlp');
 	if (existsSync(bundled)) return bundled;
 	// Fall back to a system-installed yt-dlp available on PATH.
 	return isWin ? 'yt-dlp.exe' : 'yt-dlp';
